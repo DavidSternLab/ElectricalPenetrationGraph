@@ -34,3 +34,7 @@ fp-info-cache
 
 # VSCode Local History extension
 .history/
+
+# KiCad transient/local
+*-drc.rpt
+*.kicad_prl
