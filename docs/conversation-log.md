@@ -140,7 +140,21 @@ and events are written file-relative so reconstruction stays correct (new test
 `test_midstream_recording_offsets_are_file_relative`). 16 tests pass; GUI parse-checked
 (Qt still not installed here, so not launched by me — David runs it).
 
+### Sample-rate toggle + per-channel controls + GitHub repo
+David: GUI looks good; add a sample-rate toggle; wire up per-channel controls; create a
+GitHub repo `ElectricalPenetrationGraph` under github.com/DavidSternLab.
+- **Sample-rate selector** added to the GUI (combo from `Info.supported_rates`; reconfigures
+  buffers live; disabled while recording).
+- **Per-channel controls** wired end-to-end through the mock: Vs (mV→DAC, SET_VS), servo mode
+  off/acquire/track (SERVO), Ri 1 GΩ/10 TΩ (SET_RI), cal pulse (CAL_PULSE). The mock now
+  *acts* on these and emits the corresponding logged events; cal pulse injects −50 mV and
+  auto-offs; servo respects the mode. New `tests/test_commands.py` (3 tests). **19 tests pass.**
+- **Git:** initialized a local repo rooted at `EPG_redesign/` (excludes the copyrighted
+  vendor PDFs/installers in sibling folders) and made the initial commit. **Could NOT create
+  or push the GitHub remote** — no `gh`, token, or SSH key in this environment; that step
+  needs David's GitHub auth. Push instructions provided.
+
 ### Next (candidates)
-(1) First single-channel schematic; (2) RP2040 firmware skeleton (same protocol); (3) USB
-bipolar-rail/power detail; (4) probe-head mechanical + guard-ring layout; (5) more software:
-per-channel Vs/servo/cal/Ri controls, Y-zoom/analysis, NWB export, real pyserial transport.
+(1) Push to GitHub once authed; (2) first single-channel schematic; (3) RP2040 firmware
+skeleton (same protocol); (4) USB bipolar-rail/power detail; (5) probe-head mechanical +
+guard-ring layout; (6) more software: Y-zoom/analysis, NWB export, real pyserial transport.

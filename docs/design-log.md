@@ -209,6 +209,17 @@ protocol (swap mock byte-stream for a pyserial USB-CDC port).
 **Env note:** dev verified with system Python 3.9 + user-installed numpy/h5py; Qt not present
 here so the GUI is written + parse-checked but not launched.
 
+### D15 follow-ups (GUI + mock command path)
+- GUI gained a **sample-rate selector** (from `Info.supported_rates`; reconfigures live,
+  locked during recording), **Record/Stop** + file/metadata, **markers**, working **detrend**
+  checkbox, and **per-channel controls** (Vs / servo off-acquire-track / Ri 1G-10T / cal pulse).
+- Mock device now **acts on** SET_VS/SET_RI/SERVO/CAL_PULSE and emits the matching logged
+  events (cal injects −50 mV + auto-offs; servo respects mode). `tests/test_commands.py` added
+  → **19 tests pass**.
+- **Repo:** local git initialized at `EPG_redesign/` (vendor PDFs/installers excluded),
+  initial commit made. GitHub remote `DavidSternLab/ElectricalPenetrationGraph` pending
+  David's auth (no gh/token/SSH in the dev environment).
+
 ---
 
 ## Open questions / next pivots
