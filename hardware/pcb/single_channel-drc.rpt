@@ -1,0 +1,182 @@
+** Drc report for single_channel.kicad_pcb **
+** Created on 2026-06-10T16:56:16 **
+** Report includes: Errors, Warnings **
+
+** Found 41 DRC violations **
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(38.9000 mm, 32.0000 mm): PTH pad 11 [<no net>] of K1
+    @(39.1750 mm, 31.0000 mm): Pad 1 [<no net>] of RV1 on F.Cu
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1712 mm)
+    Local override; error
+    @(40.8250 mm, 31.0000 mm): Pad 2 [<no net>] of RV1 on F.Cu
+    @(38.9000 mm, 32.0000 mm): PTH pad 11 [<no net>] of K1
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(56.1375 mm, 32.9500 mm): Pad 4 [<no net>] of U4 on F.Cu
+    @(57.0000 mm, 32.7000 mm): PTH pad 6 [<no net>] of J2
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(56.1375 mm, 32.0000 mm): Pad 5 [<no net>] of U4 on F.Cu
+    @(57.0000 mm, 32.7000 mm): PTH pad 6 [<no net>] of J2
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(56.1375 mm, 31.0500 mm): Pad 6 [<no net>] of U4 on F.Cu
+    @(57.0000 mm, 30.1600 mm): PTH pad 5 [<no net>] of J2
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(15.0000 mm, 28.0000 mm): Footprint C2
+    @(8.0000 mm, 20.0000 mm): Footprint J1
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(15.0000 mm, 28.0000 mm): Footprint C2
+    @(20.0000 mm, 32.0000 mm): Footprint K1
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(30.0000 mm, 32.0000 mm): Footprint A2
+    @(20.0000 mm, 32.0000 mm): Footprint K1
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(8.0000 mm, 20.0000 mm): Footprint J1
+    @(15.0000 mm, 12.0000 mm): Footprint C1
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(20.0000 mm, 20.0000 mm): Footprint A1
+    @(20.0000 mm, 32.0000 mm): Footprint K1
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(57.0000 mm, 20.0000 mm): Footprint J2
+    @(55.0000 mm, 32.0000 mm): Footprint U4
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(57.0000 mm, 30.1600 mm): PTH pad 5 [<no net>] of J2
+    @(55.0000 mm, 32.0000 mm): Footprint U4
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(57.0000 mm, 32.7000 mm): PTH pad 6 [<no net>] of J2
+    @(55.0000 mm, 32.0000 mm): Footprint U4
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(36.0000 mm, 24.0000 mm): Footprint RG2
+    @(20.0000 mm, 32.0000 mm): Footprint K1
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(47.0000 mm, 26.0000 mm): Footprint RF2
+    @(20.0000 mm, 32.0000 mm): Footprint K1
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(20.0000 mm, 32.0000 mm): Footprint K1
+    @(46.0000 mm, 33.0000 mm): Footprint CV
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(20.0000 mm, 32.0000 mm): Footprint K1
+    @(40.0000 mm, 31.0000 mm): Footprint RV1
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(38.9000 mm, 32.0000 mm): PTH pad 11 [<no net>] of K1
+    @(40.0000 mm, 31.0000 mm): Footprint RV1
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(57.0000 mm, 30.1600 mm): PTH pad 5 [<no net>] of J2
+    @(56.1375 mm, 31.0500 mm): Pad 6 [<no net>] of U4 on F.Cu
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(38.9000 mm, 32.0000 mm): PTH pad 11 [<no net>] of K1
+    @(39.1750 mm, 31.0000 mm): Pad 1 [<no net>] of RV1 on F.Cu
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(57.0000 mm, 32.7000 mm): PTH pad 6 [<no net>] of J2
+    @(56.1375 mm, 32.0000 mm): Pad 5 [<no net>] of U4 on F.Cu
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(56.1375 mm, 32.9500 mm): Pad 4 [<no net>] of U4 on F.Cu
+    @(57.0000 mm, 32.7000 mm): PTH pad 6 [<no net>] of J2
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(14.8594 mm, 28.5100 mm): Segment of C2 on F.Silkscreen
+    @(15.5000 mm, 28.4300 mm): Segment of J1 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(15.5000 mm, 12.3300 mm): Segment of J1 on F.Silkscreen
+    @(15.0000 mm, 26.5700 mm): Reference field of C2
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(55.9100 mm, 33.5600 mm): Segment of U4 on F.Silkscreen
+    @(55.6200 mm, 21.2700 mm): Segment of J2 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(55.6200 mm, 21.2700 mm): Segment of J2 on F.Silkscreen
+    @(54.0900 mm, 30.4400 mm): Segment of U4 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(55.0000 mm, 29.6000 mm): Reference field of U4
+    @(55.6200 mm, 21.2700 mm): Segment of J2 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(45.5000 mm, 25.1000 mm): Segment of K1 on F.Silkscreen
+    @(46.0000 mm, 31.5700 mm): Reference field of CV
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(16.5000 mm, 22.9000 mm): Segment of K1 on F.Silkscreen
+    @(36.0000 mm, 22.5700 mm): Reference field of RG2
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(0.5000 mm, 12.3300 mm): Segment of J1 on F.Silkscreen
+    @(14.2250 mm, 12.0000 mm): Pad 1 [<no net>] of C1 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(0.5000 mm, 12.3300 mm): Segment of J1 on F.Silkscreen
+    @(15.7750 mm, 12.0000 mm): Pad 2 [<no net>] of C1 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(15.5000 mm, 12.3300 mm): Segment of J1 on F.Silkscreen
+    @(15.7750 mm, 12.0000 mm): Pad 2 [<no net>] of C1 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(15.5000 mm, 12.3300 mm): Segment of J1 on F.Silkscreen
+    @(15.7750 mm, 28.0000 mm): Pad 2 [<no net>] of C2 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(15.5000 mm, 28.4300 mm): Segment of J1 on F.Silkscreen
+    @(14.2250 mm, 28.0000 mm): Pad 1 [<no net>] of C2 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(15.5000 mm, 28.4300 mm): Segment of J1 on F.Silkscreen
+    @(15.7750 mm, 28.0000 mm): Pad 2 [<no net>] of C2 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(45.4500 mm, 33.5000 mm): Segment of K1 on F.Silkscreen
+    @(45.2250 mm, 33.0000 mm): Pad 1 [<no net>] of CV on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(55.6200 mm, 21.2700 mm): Segment of J2 on F.Silkscreen
+    @(56.1375 mm, 32.0000 mm): Pad 5 [<no net>] of U4 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(55.6200 mm, 21.2700 mm): Segment of J2 on F.Silkscreen
+    @(56.1375 mm, 31.0500 mm): Pad 6 [<no net>] of U4 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(55.6200 mm, 21.2700 mm): Segment of J2 on F.Silkscreen
+    @(56.1375 mm, 32.9500 mm): Pad 4 [<no net>] of U4 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(45.5000 mm, 25.1000 mm): Segment of K1 on F.Silkscreen
+    @(45.2250 mm, 33.0000 mm): Pad 1 [<no net>] of CV on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(39.7627 mm, 31.5225 mm): Segment of RV1 on F.Silkscreen
+    @(38.9000 mm, 32.0000 mm): PTH pad 11 [<no net>] of K1
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** Ignored checks **
+    - Footprint has no courtyard defined
+    - Track endpoint not centered on via
+    - Tuning profile track geometries
+    - Footprint doesn't match symbol's footprint filters
+    - Footprint component type doesn't match footprint pads
+
+** End of Report **

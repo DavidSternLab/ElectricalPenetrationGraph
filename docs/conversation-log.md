@@ -184,8 +184,15 @@ Validated via kicad-cli: upgrade OK; ERC clean except benign warnings (embedded-
 Rendered SVG/PDF and visually confirmed all parts/pins/labels. Boxes + no footprints =
 first capture; swap to library symbols + footprints during manual cleanup.
 
-### Next (candidates)
-(1) KiCad cleanup → library symbols/footprints → PCB layout (guard ring, Cin≤1 pF); (2)
-firmware hardware bring-up (ADC/DAC registers, relay driver, flash + talk to GUI over real
-port); (3) finalize FDA supply/VOCM + Vs stage + USB budget; (4) probe-head mechanical;
-(5) software Y-zoom/analysis, NWB export, pyserial transport.
+### PCB layout groundwork + hand-off (D19)
+David will recruit a KiCad layout engineer to finish — so I did the verifiable groundwork:
+assigned footprints (in netlist + schematic Footprint properties; 3 PLACEHOLDERs noted),
+generated a pre-placed `pcb/single_channel.kicad_pcb` via the pcbnew API (electrometer-aware
+placement, 60×40 mm, 4 layers; kicad-cli DRC = 0 structural errors, 40 placement-refinement
+items), wrote `pcb-layout.md` (stackup, guard rings, Cin≤1 pF rules, net classes, grounding)
+and `pcb/single_channel.kicad_dru` (custom rules, parse-validated). Rendered board_top.svg.
+
+### Hand-off state
+Layout engineer's tasks: Update-PCB-from-Schematic → refine placement → guard scheme → route
+→ swap PLACEHOLDER footprints → DRC clean. Remaining elsewhere: firmware hardware bring-up;
+finalize FDA supply/VOCM + Vs stage + USB budget; probe-head mechanical; software niceties.

@@ -38,8 +38,10 @@ See [docs/design-log.md](docs/design-log.md) for locked decisions and rationale.
 
 - `docs/` — design docs and decision records.
 - `hardware/` — [single-channel-schematic.md](hardware/single-channel-schematic.md) (draft v0.1,
-  SPICE-verified) + `hardware/sim/` ngspice netlist + `hardware/netlist/` (ERC-checked netlist,
-  generated `single_channel.kicad_sch`, and rendered SVG/PDF).
+  SPICE-verified), [pcb-layout.md](hardware/pcb-layout.md) (layout spec / hand-off);
+  `hardware/sim/` ngspice netlist; `hardware/netlist/` (ERC-checked netlist + generated
+  `single_channel.kicad_sch` with footprints + SVG/PDF); `hardware/pcb/` (pre-placed
+  `single_channel.kicad_pcb`, custom `.kicad_dru`, board render).
 - `firmware/` — RP2040 firmware: portable C protocol (host-tested + interop-verified vs the
   Python codec) + Arduino app skeleton.
 - `firmware/` — MCU firmware (to come).

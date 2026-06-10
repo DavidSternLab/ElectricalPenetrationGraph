@@ -12,7 +12,7 @@ swap to library symbols + footprints during manual cleanup in KiCad.
 """
 from __future__ import annotations
 import uuid as _uuid
-from channel_netlist import COMPONENTS, NETS
+from channel_netlist import COMPONENTS, NETS, FOOTPRINTS
 
 def U(): return str(_uuid.uuid4())
 
@@ -83,6 +83,7 @@ def main():
             f'    (in_bom yes) (on_board yes) (dnp no) (uuid "{U()}")\n'
             f'    (property "Reference" "{ref}" (at {X:.2f} {Y-top-2.5:.2f} 0) (effects (font (size 1.27 1.27))))\n'
             f'    (property "Value" "{COMPONENTS[ref][0]}" (at {X:.2f} {Y+top+2.5:.2f} 0) (effects (font (size 1.0 1.0))))\n'
+            f'    (property "Footprint" "{FOOTPRINTS.get(ref, "")}" (at {X:.2f} {Y:.2f} 0) (effects (font (size 1.0 1.0)) (hide yes)))\n'
             f'    (instances (project "epg" (path "/{sheet_uuid}" (reference "{ref}") (unit 1)))))')
         # place wires + global labels at each pin connection point (schematic Y is flipped)
         def place(name, side):

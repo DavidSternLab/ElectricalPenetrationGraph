@@ -1,0 +1,31 @@
+(version 1)
+# Custom design rules for the EPG probe-head daughtercard (femtoampere front end).
+# Load automatically when this .kicad_dru sits beside single_channel.kicad_pcb, or paste
+# into Board Setup -> Custom Rules. Assign the "HighZ" and "Guard" net classes (see
+# pcb-layout.md) for the high-impedance-node rules to take effect.
+
+# Keep all other copper well away from the high-impedance input net (reduces leakage + Cin).
+(rule "hiZ_clearance"
+  (condition "A.NetClass == 'HighZ' && B.NetClass != 'HighZ' && B.NetClass != 'Guard'")
+  (constraint clearance (min 0.6mm)))
+
+# No vias on the high-impedance node (a via adds capacitance and a leakage path).
+(rule "hiZ_no_via"
+  (condition "A.NetClass == 'HighZ'")
+  (constraint disallow via))
+
+# Keep the high-impedance trace thin (less area = less stray C / leakage).
+(rule "hiZ_track_width"
+  (condition "A.NetClass == 'HighZ'")
+  (constraint track_width (max 0.3mm)))
+
+# Length-match the differential output pair to the ADC.
+(rule "diff_pair_skew"
+  (condition "A.NetClass == 'Diff'")
+  (constraint skew (max 0.5mm)))
+
+# General manufacturability floor (typical 2-layer/4-layer fab).
+(rule "min_clearance_default"
+  (constraint clearance (min 0.15mm)))
+(rule "min_track_default"
+  (constraint track_width (min 0.15mm)))

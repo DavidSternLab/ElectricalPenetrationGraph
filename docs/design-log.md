@@ -266,11 +266,32 @@ are marked `TODO: verify vs datasheet`; src/ not compiled here (needs RP2040 too
 first capture; swap to library symbols + assign footprints during manual cleanup in KiCad
 (now installed). The netlist data is the source of truth and regenerates the sheet.
 
+## D19 — PCB layout groundwork + hand-off package (`hardware/pcb/`, `pcb-layout.md`)
+**Context:** David will recruit a KiCad layout engineer to finish; this is the verifiable
+groundwork + hand-off (routing of an fA front end is deliberately a human task).
+**Done:**
+- **Footprints assigned** to all 23 parts in `channel_netlist.py` (verified present in KiCad
+  10 libs; 3 PLACEHOLDERs flagged: Lemo/ODU J2, latching reed relay K1, ADA4940 LFCSP).
+  Schematic now carries a `Footprint` property per symbol (so *Update PCB from Schematic*
+  pulls nets+footprints). Connection table regenerated with a footprint column.
+- **Starting board** `pcb/single_channel.kicad_pcb` generated via the `pcbnew` API
+  (`gen_pcb_placement.py`): 23 footprints pre-placed with electrometer-aware intent (BNC/A1
+  input cluster left → FDA centre → Lemo output right), 60×40 mm outline, 4 layers.
+  Validated with `kicad-cli pcb drc`: **0 unconnected/structural errors**; 40 items are
+  placement-refinement only (courtyard/silk/edge/clearance) for the layout engineer.
+  Rendered `pcb/board_top.svg` and eyeballed.
+- **`hardware/pcb-layout.md`** — the layout spec / hand-off: 4-layer stackup; the make-or-break
+  input-node rules (Cin≤1 pF, no plane under M, no vias on M, **driven guard rings** from the
+  ADA4530-1 GUARD pins, surface-leakage slot + conformal coat + cleanliness); net classes
+  (HighZ/Guard/Power/Signal/Diff); placement intent; grounding/shielding.
+- **`pcb/single_channel.kicad_dru`** — custom design rules (HighZ clearance/no-via/thin-track,
+  diff-pair skew, fab floors). Confirmed it **parses cleanly** (kicad-cli DRC, 0 rule errors).
+
 ---
 
 ## Open questions / next pivots
-- KiCad cleanup: library symbols + footprints + readable placement; then PCB layout
-  (guard ring, Cin≤1 pF discipline from D13/D16).
+- **Layout engineer:** Update-PCB-from-Schematic, refine placement (clear the 40 items),
+  implement the guard scheme, route, swap the 3 PLACEHOLDER footprints, DRC-clean.
 - Finalize FDA supply/VOCM, relay-driver sub-circuit, ADC RC + CLKIN, Vs scale/offset, USB budget.
 - Firmware hardware bring-up: ADS131M08/DAC8568 register init + CRC, Vs calibration, relay
   pulse driver; compile with PlatformIO + flash + talk to the host GUI over a real port.
