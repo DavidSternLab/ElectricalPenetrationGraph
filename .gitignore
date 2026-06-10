@@ -27,3 +27,7 @@ fp-info-cache
 .DS_Store
 .vscode/
 .idea/
+
+# KiCad lock files
+*.lck
+~*.lck
