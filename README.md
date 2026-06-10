@@ -37,7 +37,8 @@ See [docs/design-log.md](docs/design-log.md) for locked decisions and rationale.
 ## Folders
 
 - `docs/` — design docs and decision records.
-- `hardware/` — schematics, BOM, PCB (to come).
+- `hardware/` — [single-channel-schematic.md](hardware/single-channel-schematic.md) (draft v0.1,
+  SPICE-verified) + `hardware/sim/` ngspice netlist.
 - `firmware/` — MCU firmware (to come).
 - `software/` — cross-platform acquisition + analysis app, Python/pyqtgraph (to come).
 

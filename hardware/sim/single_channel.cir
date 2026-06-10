@@ -1,0 +1,44 @@
+* EPG single-channel analog front-end — behavioral verification (ngspice)
+* Verifies: (1) Ohm's-law divider Vi = (Vbio-Vs)*Ri/(Rbe+Ri),
+*           (2) total differential gain G,
+*           (3) front-end -3 dB bandwidth set by (Rbe||Ri) and Cin.
+* Op-amps modeled as ideal (electrometer followers + ideal FDA) to check topology/values;
+* real-device noise/bias come from the parts (ADA4530-1, etc.), not this idealization.
+
+.param G=8           ; differential gain of the FDA stage (maps +-150 mV Vi -> +-1.2 V)
+.param Rbe=1e9       ; insect+plant resistance (aphid ~1 GOhm)
+.param Ri=1e9        ; input resistor, 1 GOhm mode
+.param Cin=1e-12     ; input-node stray capacitance (the make-or-break spec)
+.param Vbio=1e-3     ; biological emf (1 mV) for the DC check
+.param Vsup=0        ; supplied voltage Vs (offset compensation)
+.param Vocm=0        ; FDA output common-mode (0 for sim)
+
+* Primary circuit: gnd(plant) - Vbio - Rbe - [M] - Ri - [S] - Vs - gnd
+Vbio nbio 0 DC {Vbio} AC 1
+Rbe  nbio M {Rbe}
+Ri   M S {Ri}
+Vs   S 0 DC {Vsup}
+Cin  M 0 {Cin}
+
+* Ideal electrometer unity-gain buffers: a1 = V(M) (insect), a2 = V(S) (Vs side)
+Ea1 a1 0 M 0 1.0
+Ea2 a2 0 S 0 1.0
+
+* Ideal fully-differential amplifier: (outp-outm) = G*(a1-a2), common mode = Vocm
+Boutp outp 0 V = {Vocm} + 0.5*{G}*(V(a1)-V(a2))
+Boutm outm 0 V = {Vocm} - 0.5*{G}*(V(a1)-V(a2))
+
+.control
+  op
+  let vi   = v(M)-v(S)
+  let vout = v(outp)-v(outm)
+  echo "--- DC operating point ---"
+  print v(M) v(S) vi vout
+  echo "expected Vi   = Vbio*Ri/(Rbe+Ri)"
+  echo "expected Vout = G*Vi"
+  ac dec 100 1 100k
+  let voutd = v(outp)-v(outm)
+  wrdata /tmp/epg_ac.dat mag(voutd)
+  echo "--- AC sweep written to /tmp/epg_ac.dat ---"
+.endc
+.end

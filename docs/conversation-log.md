@@ -154,7 +154,20 @@ GitHub repo `ElectricalPenetrationGraph` under github.com/DavidSternLab.
   or push the GitHub remote** — no `gh`, token, or SSH key in this environment; that step
   needs David's GitHub auth. Push instructions provided.
 
+### GitHub repo pushed
+Created + pushed **public** repo github.com/DavidSternLab/ElectricalPenetrationGraph (account
+`dstern`). First `gh repo create --push` made the repo but failed to push (gh set to SSH, no
+trusted key); fixed by `gh auth setup-git` + switching origin to HTTPS. 3 commits on `main`.
+
+### Single-channel schematic v0.1 (D16) — SPICE-verified
+Built `hardware/single-channel-schematic.md` and `hardware/sim/single_channel.cir`. Topology:
+ADA4530-1 ×2 electrometer followers across Ri (1 GΩ + latching reed relay), FDA (ADA4940-1)
+giving gain≈8 + the differential cable drive in one stage; motherboard = ADS131M08 / DAC8568
+/ RP2040 / LM27762. Installed ngspice (brew) and simulated: divider Vi=0.500 mV ✓, gain
+Vout=4.00 mV (8×) ✓, **f₋₃dB=318.3 Hz = analytic to 100%** → confirms the D13 bandwidth
+budget and that Cin≤~1 pF is the key layout lever.
+
 ### Next (candidates)
-(1) Push to GitHub once authed; (2) first single-channel schematic; (3) RP2040 firmware
-skeleton (same protocol); (4) USB bipolar-rail/power detail; (5) probe-head mechanical +
-guard-ring layout; (6) more software: Y-zoom/analysis, NWB export, real pyserial transport.
+(1) KiCad capture from the spec; (2) RP2040 firmware skeleton (same protocol → talks to the
+host GUI); (3) finalize FDA supply/VOCM + relay driver + Vs stage + USB budget; (4) probe-head
+mechanical/guard-ring layout; (5) software Y-zoom/analysis, NWB export, real pyserial transport.

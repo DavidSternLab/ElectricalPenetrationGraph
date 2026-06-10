@@ -220,14 +220,27 @@ here so the GUI is written + parse-checked but not launched.
   initial commit made. GitHub remote `DavidSternLab/ElectricalPenetrationGraph` pending
   David's auth (no gh/token/SSH in the dev environment).
 
+## D16 — Single-channel schematic v0.1 + SPICE verification (`hardware/`)
+**Done:** First schematic-level design (`hardware/single-channel-schematic.md`): block diagram,
+signal chain, component table, power tree, layout-critical notes. Topology decided:
+- Daughtercard: **A1, A2 = ADA4530-1** unity-gain electrometer followers sensing the two ends
+  of Ri; **Ri = 1 GΩ + latching reed relay** (open → 10 TΩ intrinsic); Vs_in applied at the S
+  node (cal pulse rides on it); **FDA = ADA4940-1** provides the gain *and* the differential
+  cable drive in one stage. **Gain G ≈ 8** via Rg=1.0k / Rf=8.06k (D13).
+- Motherboard: ADS131M08 diff input (Σ-Δ AA → no analog AA filter), DAC8568→scale/offset
+  (±0.5 V)→~10 Hz LP→Vs_in, RP2040, LM27762 ±5 V + 3.3 V LDO, on-card latching-relay driver.
+**Verified by SPICE** (`hardware/sim/single_channel.cir`, ngspice): Ohm's-law divider
+Vi = 0.500 mV ✓, differential gain Vout = 4.00 mV (=8×) ✓, and **front-end f₋₃dB = 318.3 Hz,
+matching the analytic `1/(2π·(Rbe‖Ri)·Cin)` to 100%** — empirically confirming the D13
+bandwidth budget and that **Cin ≤ ~1 pF is the dominant layout lever**.
+
 ---
 
 ## Open questions / next pivots
-- First single-channel **schematic** (ADA4530-1 front end, Ri/reed-relay, diff amp, diff
-  driver; motherboard slice: ADS131M08/DAC8568/RP2040/LM27762).
-- USB bipolar-rail detail + current budget; clean ADC clock.
+- KiCad schematic capture from the spec; finalize FDA supply/VOCM, relay-driver sub-circuit,
+  ADC RC + CLKIN, Vs scale/offset values, USB current budget.
 - Mechanical: shielded probe-head enclosure, guard-ring layout, conformal coating.
-- Firmware skeleton on RP2040 implementing the same protocol.
+- **RP2040 firmware skeleton** implementing the protocol (talks to the existing host GUI).
 - Software niceties: analysis/Y-zoom UI, waveform labeling, NWB export, real serial transport.
 - Channel count confirm (assume 8).
 - USB bipolar-rail generation.
