@@ -234,13 +234,30 @@ Vi = 0.500 mV ✓, differential gain Vout = 4.00 mV (=8×) ✓, and **front-end 
 matching the analytic `1/(2π·(Rbe‖Ri)·Cin)` to 100%** — empirically confirming the D13
 bandwidth budget and that **Cin ≤ ~1 pF is the dominant layout lever**.
 
+## D17 — RP2040 firmware skeleton + portable C protocol (`firmware/`)
+**Done:**
+- `firmware/proto/epg_proto.{h,c}` — the protocol codec in **portable C** (COBS, CRC-16,
+  i24, frame builders, incremental parser, command decoders), mirroring the Python codec.
+- `firmware/test/` — host-compiled **C selftest** (`make check`) and a **cross-language
+  interop test** (`make interop`, `interop_test.py`) that builds frames in C and parses them
+  in Python and vice-versa. **Proven byte-for-byte compatible both directions** → the
+  firmware will talk to the existing host GUI unchanged.
+- `firmware/src/` — RP2040 Arduino app skeleton: `main.cpp` (USB-CDC loop, command dispatch,
+  DRDY-driven 8-ch acquisition, block streaming, keep-in-range Vs servo, sample-stamped
+  EVENTs), `ads131m08.{h,cpp}`, `dac8568.{h,cpp}`, `board.h` pin map; `platformio.ini`
+  (arduino-pico) compiling the shared proto/ alongside src/.
+**Verified:** C selftest (7 checks) + interop (both directions) pass; all 4 Python host test
+files still pass. **Not hardware-tested:** ADC/DAC register sequences + relay/servo scaling
+are marked `TODO: verify vs datasheet`; src/ not compiled here (needs RP2040 toolchain).
+
 ---
 
 ## Open questions / next pivots
 - KiCad schematic capture from the spec; finalize FDA supply/VOCM, relay-driver sub-circuit,
   ADC RC + CLKIN, Vs scale/offset values, USB current budget.
+- Firmware hardware bring-up: ADS131M08/DAC8568 register init + CRC, Vs calibration, relay
+  pulse driver; compile with PlatformIO + flash + talk to the host GUI over a real port.
 - Mechanical: shielded probe-head enclosure, guard-ring layout, conformal coating.
-- **RP2040 firmware skeleton** implementing the protocol (talks to the existing host GUI).
 - Software niceties: analysis/Y-zoom UI, waveform labeling, NWB export, real serial transport.
 - Channel count confirm (assume 8).
 - USB bipolar-rail generation.

@@ -11,6 +11,13 @@ venv/
 *.hdf5
 *.epgraw
 
+# C / firmware build artifacts
+firmware/test/test_proto
+*.o
+*.elf
+*.uf2
+.pio/
+
 # OS / editor
 .DS_Store
 .vscode/

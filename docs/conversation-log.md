@@ -167,7 +167,15 @@ giving gain≈8 + the differential cable drive in one stage; motherboard = ADS13
 Vout=4.00 mV (8×) ✓, **f₋₃dB=318.3 Hz = analytic to 100%** → confirms the D13 bandwidth
 budget and that Cin≤~1 pF is the key layout lever.
 
+### RP2040 firmware skeleton (D17)
+Built `firmware/`: protocol re-implemented in **portable C** (`proto/epg_proto.{h,c}`) and the
+RP2040 app skeleton (`src/main.cpp` + ADS131M08/DAC8568 drivers + board.h + platformio.ini).
+Key verification: a host-compiled C selftest plus a **cross-language interop test** (C builds
+frames → Python parses, and vice-versa) — **byte-for-byte compatible both ways**, so the
+firmware speaks exactly what the host GUI expects. ADC/DAC register details + relay/servo
+scaling are TODO (datasheet/bring-up); src/ not compiled here. All host tests still pass.
+
 ### Next (candidates)
-(1) KiCad capture from the spec; (2) RP2040 firmware skeleton (same protocol → talks to the
-host GUI); (3) finalize FDA supply/VOCM + relay driver + Vs stage + USB budget; (4) probe-head
-mechanical/guard-ring layout; (5) software Y-zoom/analysis, NWB export, real pyserial transport.
+(1) KiCad capture; (2) firmware hardware bring-up (ADC/DAC registers, relay driver, compile +
+flash + talk to GUI over a real port); (3) finalize FDA supply/VOCM + Vs stage + USB budget;
+(4) probe-head mechanical/guard-ring layout; (5) software Y-zoom/analysis, NWB export, pyserial.
