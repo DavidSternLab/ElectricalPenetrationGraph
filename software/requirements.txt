@@ -1,0 +1,10 @@
+# Core data pipeline (protocol layer needs none of these — pure stdlib)
+numpy>=1.23
+h5py>=3.7
+# Live GUI (optional)
+pyqtgraph>=0.13
+PyQt5>=5.15            # or PySide6 — either Qt binding works
+# Real hardware transport (optional, when the device exists)
+pyserial>=3.5
+# Dev
+pytest>=7
