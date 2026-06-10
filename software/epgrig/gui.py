@@ -105,8 +105,10 @@ def run_mock_gui(rate_hz: int = 1000, channel_mask: int = 0xFF,
     # per-channel controls
     cf = group("Channel control")
     cmb_chan = QtWidgets.QComboBox()
+    cmb_chan.addItem("All channels", -1)          # -1 = apply to every channel
     for c in chans:
         cmb_chan.addItem(f"ch{c}", c)
+    cmb_chan.setCurrentIndex(1 if nch else 0)     # default to the first real channel
     sp_vs = QtWidgets.QDoubleSpinBox(); sp_vs.setRange(-500.0, 500.0); sp_vs.setSuffix(" mV")
     sp_vs.setDecimals(1); sp_vs.setSingleStep(1.0)
     cmb_servo = QtWidgets.QComboBox(); cmb_servo.addItems(["off", "acquire", "track"])
@@ -146,12 +148,16 @@ def run_mock_gui(rate_hz: int = 1000, channel_mask: int = 0xFF,
     cmb_rate.currentIndexChanged.connect(change_rate)
     cb_detrend.stateChanged.connect(lambda _=0: state.update(detrend=cb_detrend.isChecked()))
 
-    # ---- handlers: per-channel ----
-    def current_ch():
-        return cmb_chan.currentData()
+    # ---- handlers: per-channel (target = one channel, or all when "All channels") ----
+    def targets():
+        d = cmb_chan.currentData()
+        return list(chans) if d == -1 else [d]
 
     def refresh_chan_widgets():
-        c = current_ch(); s = chstate[c]
+        d = cmb_chan.currentData()
+        if d == -1:
+            return  # "All channels": keep current widget values; they apply to every channel
+        s = chstate[d]
         for w in (sp_vs, cmb_servo, cmb_ri):
             w.blockSignals(True)
         sp_vs.setValue(s["vs_mv"]); cmb_servo.setCurrentIndex(s["servo"]); cmb_ri.setCurrentIndex(s["ri"])
@@ -160,23 +166,27 @@ def run_mock_gui(rate_hz: int = 1000, channel_mask: int = 0xFF,
     cmb_chan.currentIndexChanged.connect(lambda _=0: refresh_chan_widgets())
 
     def on_vs(_=0.0):
-        c = current_ch(); chstate[c]["vs_mv"] = sp_vs.value()
-        send(P.T_SET_VS, bytes([c]) + int(vs_mv_to_dac(sp_vs.value())).to_bytes(2, "little"))
+        dac = int(vs_mv_to_dac(sp_vs.value())).to_bytes(2, "little")
+        for c in targets():
+            chstate[c]["vs_mv"] = sp_vs.value()
+            send(P.T_SET_VS, bytes([c]) + dac)
     sp_vs.valueChanged.connect(on_vs)
 
     def on_servo(idx):
-        c = current_ch(); chstate[c]["servo"] = idx
-        send(P.T_SERVO, bytes([c, idx, 0, 0, 0, 0, 0]))
+        for c in targets():
+            chstate[c]["servo"] = idx
+            send(P.T_SERVO, bytes([c, idx, 0, 0, 0, 0, 0]))
     cmb_servo.currentIndexChanged.connect(on_servo)
 
     def on_ri(idx):
-        c = current_ch(); chstate[c]["ri"] = idx
-        send(P.T_SET_RI, bytes([c, idx]))
+        for c in targets():
+            chstate[c]["ri"] = idx
+            send(P.T_SET_RI, bytes([c, idx]))
     cmb_ri.currentIndexChanged.connect(on_ri)
 
     def on_cal():
-        c = current_ch()
-        send(P.T_CAL_PULSE, bytes([c, 1]) + (500).to_bytes(2, "little"))
+        for c in targets():
+            send(P.T_CAL_PULSE, bytes([c, 1]) + (500).to_bytes(2, "little"))
     btn_cal.clicked.connect(on_cal)
     refresh_chan_widgets()
 
