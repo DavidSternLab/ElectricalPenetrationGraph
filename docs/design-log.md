@@ -250,11 +250,28 @@ bandwidth budget and that **Cin ≤ ~1 pF is the dominant layout lever**.
 files still pass. **Not hardware-tested:** ADC/DAC register sequences + relay/servo scaling
 are marked `TODO: verify vs datasheet`; src/ not compiled here (needs RP2040 toolchain).
 
+## D18 — Netlist + KiCad schematic capture (ERC-clean, `hardware/netlist/`)
+**Done:**
+- `channel_netlist.py` — the single-channel daughtercard as machine-checkable data
+  (23 components, 71 pins, 21 nets) + an **ERC-style checker**: 0 errors / 0 warnings
+  (every pin connected exactly once; power + diff pair consistent). Generates
+  `connection-table.md`.
+- `gen_kicad_sch.py` — emits a real **`single_channel.kicad_sch`** from that netlist (box
+  symbols + global-label-per-pin connectivity). Validated with **`kicad-cli` (KiCad 10.0.3):
+  upgrade + ERC pass with only benign warnings** — 23 "symbol library 'epg' not configured"
+  (symbols are embedded/self-contained) and 3 isolated-label (the intentional single-node
+  nets SHLD/GUARD1/GUARD2). **Zero connectivity errors.** Rendered to `single_channel.svg` /
+  `.pdf` and eyeballed — all parts, pins, and net labels present and correct.
+**Note:** box symbols (not op-amp glyphs) and no footprints yet — intended as a verified
+first capture; swap to library symbols + assign footprints during manual cleanup in KiCad
+(now installed). The netlist data is the source of truth and regenerates the sheet.
+
 ---
 
 ## Open questions / next pivots
-- KiCad schematic capture from the spec; finalize FDA supply/VOCM, relay-driver sub-circuit,
-  ADC RC + CLKIN, Vs scale/offset values, USB current budget.
+- KiCad cleanup: library symbols + footprints + readable placement; then PCB layout
+  (guard ring, Cin≤1 pF discipline from D13/D16).
+- Finalize FDA supply/VOCM, relay-driver sub-circuit, ADC RC + CLKIN, Vs scale/offset, USB budget.
 - Firmware hardware bring-up: ADS131M08/DAC8568 register init + CRC, Vs calibration, relay
   pulse driver; compile with PlatformIO + flash + talk to the host GUI over a real port.
 - Mechanical: shielded probe-head enclosure, guard-ring layout, conformal coating.

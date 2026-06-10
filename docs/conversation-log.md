@@ -175,7 +175,17 @@ frames → Python parses, and vice-versa) — **byte-for-byte compatible both wa
 firmware speaks exactly what the host GUI expects. ADC/DAC register details + relay/servo
 scaling are TODO (datasheet/bring-up); src/ not compiled here. All host tests still pass.
 
+### Netlist + KiCad schematic capture (D18)
+David installed KiCad (10.0.3) → enables `kicad-cli` validation. Built `hardware/netlist/`:
+`channel_netlist.py` (23 comp / 71 pins / 21 nets + ERC checker, 0 err/0 warn) →
+`gen_kicad_sch.py` emits `single_channel.kicad_sch` (box symbols + global-label-per-pin).
+Validated via kicad-cli: upgrade OK; ERC clean except benign warnings (embedded-symbol
+"library not configured" ×23, intentional single-node nets ×3); **zero connectivity errors**.
+Rendered SVG/PDF and visually confirmed all parts/pins/labels. Boxes + no footprints =
+first capture; swap to library symbols + footprints during manual cleanup.
+
 ### Next (candidates)
-(1) KiCad capture; (2) firmware hardware bring-up (ADC/DAC registers, relay driver, compile +
-flash + talk to GUI over a real port); (3) finalize FDA supply/VOCM + Vs stage + USB budget;
-(4) probe-head mechanical/guard-ring layout; (5) software Y-zoom/analysis, NWB export, pyserial.
+(1) KiCad cleanup → library symbols/footprints → PCB layout (guard ring, Cin≤1 pF); (2)
+firmware hardware bring-up (ADC/DAC registers, relay driver, flash + talk to GUI over real
+port); (3) finalize FDA supply/VOCM + Vs stage + USB budget; (4) probe-head mechanical;
+(5) software Y-zoom/analysis, NWB export, pyserial transport.

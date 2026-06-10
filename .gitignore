@@ -18,6 +18,11 @@ firmware/test/test_proto
 *.uf2
 .pio/
 
+# KiCad generated/temporary
+*-erc.rpt
+*.kicad_sch-bak
+fp-info-cache
+
 # OS / editor
 .DS_Store
 .vscode/
